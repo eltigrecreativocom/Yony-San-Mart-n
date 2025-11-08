@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invitación - 50 Años de Yony San Martín</title>
+    <!-- UIkit CSS -->
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Fuentes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Delius&family=Great+Vibes&family=Meow+Script&family=MonteCarlo&family=Parisienne&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+
+
+</head>
+
+<body>
+
+    <!-- Modal de bienvenida -->
+    <div id="modal-invitacion" class="modal" data-modal="welcome">
+        <h2>Estás invitado</h2>
+        <p>Una celebración muy especial te espera</p>
+        <img src="lineas.svg" class="lineas" alt="">
+        <img src="entrada.svg" class="nombre" alt="">
+
+        <br>
+        <br>
+        <button id="btn-ver-invitacion"><img src="cartas.png" class="carta" alt=""></button>
+
+    </div>
+
+    <!-- Lightbox para efecto fade -->
+    <div class="lightbox" id="fade-lightbox"></div>
+
+    <!-- Modal de Yape -->
+    <div id="modal-yape" class="modal-yape" data-modal="yape" style="display: none;">
+        <div class="modal-yape-content">
+            <div class="modal-yape-header">
+                <button id="cerrar-modal-yape" class="cerrar-modal">&times;</button>
+            </div>
+            <div class="modal-yape-body">
+                <p class="mensaje-yape">
+                    Tu presencia es el mejor regalo, pero si deseas tener un detalle conmigo, te comparto estas
+                    opciones:
+                </p>
+                <div class="qr-container">
+                    <p class="qr-titulo"><strong>Yape:</strong></p>
+                    <img src="yape.jpg" alt="Código QR Yape" class="qr-yape">
+                    <p class="qr-texto">Escanea el código con tu app Yape</p>
+                </div>
+                <div class="datos-bancarios">
+                    <p><strong>Cuenta:</strong> 19100175363033</p>
+                    <p><strong>CCI:</strong> 00219110017536303351</p>
+                </div>
+                <div class="mensaje-final">
+                    <p>¡Gracias por ser parte de esta celebración especial! 🥳</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contenido">
+        <!-- SALUDO -->
+        <section saludo class="saludo">
+
+            <!-- Con imagen de textura -->
+            <!--h1 id="gold-text">50 AÑOS</h1-->
+            <img src="fondo2.png" alt="Tito Sarzo" class="animate terno" data-swiper-parallax="-600">
+            <div class="info">
+                <!-- Solo con degradado -->
+                <h1 class="gold-text">Yony San Martín Carhuapoma</h1>
+
+                <p>Este año es muy especial, celebro cincuenta años de vida<br> marcados por historias y
+                    aprendizajes.<br> Con gratitud deseo compartir esta fecha con mi familia y<br> amigos, para
+                    disfrutar juntos de una noche llena de alegría, <br>buena música y recuerdos que perdurarán por
+                    siempre.</p>
+                <!--h3>Mi cumpleaños</h3-->
+                <!-- <img src="50.png" alt="50 años" class="cincuenta"> -->
+
+                <div class="fechacruz">
+                    <div class="dia">VIERNES</div>
+                    <div class="g3">
+                        <div class="item">NOVIEMBRE</div>
+                        <p class="d2">15</p>
+                        <div class="item">2:00 p.m</div>
+                    </div>
+                </div>
+                <p>LUGAR: Jr. Los melocotones 292<br> Urb. Naranjal<br>
+                    Independencia</p>
+
+                <!--ul class="r3">
+                    <li id="lluvia-sobres-btn" style="cursor: pointer;">
+                        <img src="c.svg" alt="">
+                        <p>lluvia de sobres</p>
+                    </li>
+                    <li>
+                        <img src="codes.svg" alt="">
+                        <p>Vestimenta elegante</p>
+                    </li>
+                </ul-->
+                <br>
+                <!--ul class="links">
+                    <li><a href="https://maps.app.goo.gl/4an3fo3VXgKJKh9y5" target="_blank">Ver ubicación</a></li>
+                    <li><a href="https://wa.me/51936735159?text=Hola%20Tito!%20Confirmo%20mi%20asistencia%20a%20tu%20celebración%20de%2050%20años%20el%206%20de%20diciembre.%20¡Nos%20vemos%20ahí!"
+                            target="_blank">Confirmar asistencia</a></li>
+                </ul-->
+                <br>
+
+                <P class="nofaltes" style="font-family: 'Courier New', Courier, monospace;">¡Te esperamos!</P>
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- Reproductor de música -->
+    <div class="player" role="region" style="display: none;" aria-label="Reproductor de música">
+        <audio id="audio" preload="metadata">
+            <source src="musica.mp3" type="audio/mp3">
+            Tu navegador no soporta el elemento de audio.
+        </audio>
+        <button id="playPause" aria-label="Reproducir" title="Reproducir">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                <path d="M8 5v14l11-7L8 5z" fill="currentColor" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+
+
+        // Reproductor de música
+        const audio = document.getElementById('audio');
+        const btn = document.getElementById('playPause');
+
+        const playSVG = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg>`;
+        const pauseSVG = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>`;
+
+        btn.innerHTML = playSVG;
+
+        btn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = pauseSVG;
+                btn.setAttribute('aria-label', 'Pausar');
+            } else {
+                audio.pause();
+                btn.innerHTML = playSVG;
+                btn.setAttribute('aria-label', 'Reproducir');
+            }
+        });
+
+        // Modal de bienvenida con efecto fade
+        const modal = document.getElementById('modal-invitacion');
+        const btnVer = document.getElementById('btn-ver-invitacion');
+        const fadeLightbox = document.getElementById('fade-lightbox');
+
+        // Función para activar efecto fade al cerrar modal de bienvenida
+        function cerrarModalBienvenida() {
+            // Activar lightbox fade
+            fadeLightbox.classList.add('fade-opening');
+
+            // Después del efecto fade, ocultar modal
+            setTimeout(() => {
+                modal.classList.add('closing');
+
+                setTimeout(() => {
+                    modal.style.display = 'none';
+
+                    // Mostrar y animar el contenido principal
+                    mostrarContenidoAnimado();
+
+                    // Cerrar lightbox
+                    setTimeout(() => {
+                        fadeLightbox.classList.remove('fade-opening');
+                        fadeLightbox.classList.add('fade-closing');
+
+                        setTimeout(() => {
+                            fadeLightbox.classList.remove('fade-closing');
+                        }, 600);
+                    }, 300);
+
+                }, 500);
+            }, 300); // Tiempo más corto para el fade
+        }
+
+        // Función para animar el contenido principal paso a paso
+        function mostrarContenidoAnimado() {
+            const contenido = document.getElementById('contenido');
+
+            // Elementos que se van a animar en orden específico
+            const elementosAnimacion = [
+                { selector: '.terno', delay: 500 },
+                { selector: '.saludo h1', delay: 800 },
+                { selector: '.saludo .info > p:first-of-type', delay: 1100 },
+                { selector: '.fechacruz', delay: 1400 },
+                { selector: '.fechacruz .dia', delay: 1600 },
+                { selector: '.fechacruz .g3 .item:first-child', delay: 1700 },
+                { selector: '.fechacruz .g3 .d2', delay: 1800 },
+                { selector: '.fechacruz .g3 .item:last-child', delay: 1900 },
+                { selector: '.saludo .info > p:nth-of-type(2)', delay: 2100 },
+                { selector: '.r3', delay: 2400 },
+                { selector: '.r3 li:first-child', delay: 2600 },
+                { selector: '.r3 li:first-child img', delay: 2700 },
+                { selector: '.r3 li:first-child p', delay: 2800 },
+                { selector: '.r3 li:last-child', delay: 2900 },
+                { selector: '.r3 li:last-child img', delay: 3000 },
+                { selector: '.r3 li:last-child p', delay: 3100 },
+                { selector: '.links', delay: 3400 },
+                { selector: '.links li:first-child', delay: 3600 },
+                { selector: '.links li:last-child', delay: 3800 },
+                { selector: '.nofaltes', delay: 4100 }
+            ];
+
+            // Mostrar el contenedor principal primero
+            setTimeout(() => {
+                contenido.classList.add('contenido-visible');
+            }, 200);
+
+            // Animar cada elemento en secuencia
+            elementosAnimacion.forEach((item) => {
+                setTimeout(() => {
+                    const elemento = document.querySelector(item.selector);
+                    if (elemento) {
+                        elemento.classList.add('animate-in');
+                        console.log(`Animando: ${item.selector}`); // Para debug
+                    } else {
+                        console.log(`No encontrado: ${item.selector}`); // Para debug
+                    }
+                }, item.delay);
+            });
+
+            // Mostrar y animar el reproductor al final
+
+        }
+
+        btnVer.addEventListener('click', function () {
+            cerrarModalBienvenida();
+
+            // Iniciar música automáticamente
+            audio.play().then(() => {
+                btn.innerHTML = pauseSVG;
+                btn.setAttribute('aria-label', 'Pausar');
+            }).catch(() => {
+                console.log('Autoplay bloqueado por el navegador');
+            });
+        });
+
+        // Modal de Yape con efecto fade
+        const modalYape = document.getElementById('modal-yape');
+        const btnLluviaSobres = document.getElementById('lluvia-sobres-btn');
+        const btnCerrarYape = document.getElementById('cerrar-modal-yape');
+
+        // Función para abrir modal Yape con efecto fade
+        function abrirModalYape() {
+            // Activar lightbox fade
+            fadeLightbox.classList.add('fade-opening');
+
+            // Después del efecto fade, mostrar modal
+            setTimeout(() => {
+                modalYape.style.display = 'flex';
+                setTimeout(() => {
+                    modalYape.classList.add('show');
+                }, 10);
+
+                // Cerrar lightbox
+                setTimeout(() => {
+                    fadeLightbox.classList.remove('fade-opening');
+                    fadeLightbox.classList.add('fade-closing');
+
+                    setTimeout(() => {
+                        fadeLightbox.classList.remove('fade-closing');
+                    }, 600);
+                }, 200);
+            }, 300); // Tiempo más corto para el fade
+        }
+
+        // Función para cerrar modal Yape con efecto fade
+        function cerrarModalYape() {
+            // Activar lightbox fade
+            fadeLightbox.classList.add('fade-opening');
+
+            // Después del efecto fade, ocultar modal
+            setTimeout(() => {
+                modalYape.classList.remove('show');
+                modalYape.classList.add('closing');
+
+                setTimeout(() => {
+                    modalYape.style.display = 'none';
+                    modalYape.classList.remove('closing');
+
+                    // Cerrar lightbox
+                    setTimeout(() => {
+                        fadeLightbox.classList.remove('fade-opening');
+                        fadeLightbox.classList.add('fade-closing');
+
+                        setTimeout(() => {
+                            fadeLightbox.classList.remove('fade-closing');
+                        }, 600);
+                    }, 200);
+                }, 400);
+            }, 300); // Tiempo más corto para el fade
+        }
+
+        btnLluviaSobres.addEventListener('click', abrirModalYape);
+        btnCerrarYape.addEventListener('click', cerrarModalYape);
+
+        // Cerrar modal al hacer clic fuera del contenido
+        modalYape.addEventListener('click', function (e) {
+            if (e.target === modalYape) {
+                cerrarModalYape();
+            }
+        });
+
+        // Cerrar modales con tecla Escape
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                // Cerrar modal de Yape si está abierto
+                if (modalYape.classList.contains('show')) {
+                    cerrarModalYape();
+                }
+                // Cerrar modal de bienvenida si está visible
+                else if (modal.style.display !== 'none' && !modal.classList.contains('closing')) {
+                    cerrarModalBienvenida();
+                }
+            }
+        });
+    </script>
+</body>
+</body>
+
+</html>
